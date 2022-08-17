@@ -21,8 +21,8 @@ public class AirlineManager {
     public void initManager() {
         Boolean exit = false;
         do {
-            String principalMenu = "  1. Gestionar Tickets    \n"
-                                  +"  2. Salir                \n";
+            String principalMenu = "\n  1. Gestionar Tickets    \n\n"
+                                  +"  2. Salir                \n\n";
             String selectedOption = JOptionPane.showInputDialog(null,principalMenu,airlineName,1);
             switch (selectedOption) {
                 case "1":

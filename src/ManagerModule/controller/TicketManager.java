@@ -17,10 +17,10 @@ public class TicketManager {
     public void openTicketManager() {
         Boolean back = false;
         do {
-            String menu = "  1. Generar nuevo ticket    \n"
-                                  +"  2. Ver ticket asignados   \n"
-                                  +"  3. Eliminar ticket         \n"
-                                  +"  4. Atrás                   \n";
+            String menu = "\n  1. Generar nuevo ticket    \n\n"
+                                  +"  2. Ver ticket asignados   \n\n"
+                                  +"  3. Eliminar ticket         \n\n"
+                                  +"  4. Atrás                   \n\n";
             String selectedOption = JOptionPane.showInputDialog(null,menu,"",1);
             switch (selectedOption) {
                 case "1":
@@ -58,9 +58,9 @@ public class TicketManager {
         Boolean back = false;
         do {
             Boolean isEditable = false;
-            String ticketsList = "*****************************************\n"
+            String ticketsList = "\n*****************************************\n\n"
                                + getTicketListToString(airlineManager.getAirlineTickets(), isEditable)
-                               + "0. Atrás                   \n\n";
+                               + "\n0. Atrás                   \n\n";
             String selectedOption = JOptionPane.showInputDialog(null,ticketsList,"",1);
             switch (selectedOption) {
                 case "0":
@@ -76,11 +76,11 @@ public class TicketManager {
         Boolean back = false;
         do {
             Boolean isEditable = true;
-            String editableTicketsList = "*****************************************\n"
+            String editableTicketsList = "\n*****************************************\n\n"
                                         + getTicketListToString(airlineManager.getAirlineTickets(), isEditable)
-                                        + "Ingrese el indice del ticket \n"
-                                        + "que desea eliminar o ingrese \n"
-                                        + "0 para ir atrás\n";
+                                        + "\nIngrese el indice del ticket\n"
+                                        + "que desea eliminar o ingrese\n"
+                                        + "0 para ir atrás\n\n";
             String selectedOption = JOptionPane.showInputDialog(null,editableTicketsList,"",1);
             switch (selectedOption) {
                 case "0":
