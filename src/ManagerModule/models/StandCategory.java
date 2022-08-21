@@ -10,4 +10,8 @@ public enum StandCategory {
     StandCategory(int price) {
         standPrice = price;
     }
+
+    public int getStandPrice() {
+        return standPrice;
+    }
 }

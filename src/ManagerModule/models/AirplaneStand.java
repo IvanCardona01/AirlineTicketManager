@@ -5,7 +5,12 @@ public class AirplaneStand {
     private StandCategory category;
     private int standNumber;
 
-    public AirplaneStand() { }
+    public AirplaneStand(){}
+    public AirplaneStand(String standUserName, StandCategory category , int standNumber) {
+        this.standUserName = standUserName;
+        this.category = category ;
+        this.standNumber = standNumber;
+    }
 
     public StandCategory getCategory() {
         return category;
