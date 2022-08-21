@@ -1,5 +1,6 @@
 package ManagerModule.controller;
 
+import ManagerModule.Exceptions.CustomExceptions;
 import ManagerModule.models.TicketForm;
 import utilities.UtilitiesModule;
 
@@ -14,7 +15,7 @@ public class TicketManager {
         this.airlineManager = airlineManager;
     }
 
-    public void openTicketManager() {
+    public void openTicketManager() throws CustomExceptions {
         Boolean back = false;
         do {
             String menu = "\n  1. Generar nuevo ticket    \n\n"
@@ -24,8 +25,12 @@ public class TicketManager {
             String selectedOption = JOptionPane.showInputDialog(null,menu,"",1);
             switch (selectedOption) {
                 case "1":
-                    TicketForm form = openFormTicketGenerator();
-                    airlineManager.addTicket(form);
+                    if (airlineManager.airplaneHasAvailableStands()) {
+                        TicketForm form = openFormTicketGenerator();
+                        airlineManager.addTicket(form);
+                    } else {
+                        throw new CustomExceptions("Lo sentimos no hay puesto disponibles");
+                    }
                     break;
                 case "2":
                     showTicketList(airlineManager.getAirlineTickets());
@@ -49,9 +54,16 @@ public class TicketManager {
         TicketForm form = new TicketForm();
         Boolean back = false;
         do {
+            String name = receiveAnswer("Nombre del pasajero: ");
+            String customerId = receiveAnswer(" del pasajero: ");
 
         } while (!back);
         return form;
+    }
+
+    public String receiveAnswer(String question) {
+        String answerd = JOptionPane.showInputDialog(question);
+        return answerd;
     }
 
     private void showTicketList(ArrayList<TicketForm> airlineTickets) {

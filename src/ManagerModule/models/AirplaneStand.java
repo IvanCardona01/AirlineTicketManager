@@ -4,8 +4,14 @@ public class AirplaneStand {
     private String standUserName;
     private StandCategory category;
     private int standNumber;
+    private Boolean ocuped;
 
-    public AirplaneStand() { }
+    public AirplaneStand(String standUserName, StandCategory category, int standNumber, Boolean ocuped) {
+        this.standUserName = standUserName;
+        this.category = category;
+        this.standNumber = standNumber;
+        this.ocuped = ocuped;
+    }
 
     public StandCategory getCategory() {
         return category;
@@ -29,5 +35,13 @@ public class AirplaneStand {
 
     public void setStandUserName(String standUserName) {
         this.standUserName = standUserName;
+    }
+
+    public Boolean isOcuped() {
+        return ocuped;
+    }
+
+    public void setOcuped(Boolean ocuped) {
+        ocuped = ocuped;
     }
 }

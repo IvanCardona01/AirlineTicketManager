@@ -1,4 +1,5 @@
 package ManagerModule.controller;
+import ManagerModule.Exceptions.CustomExceptions;
 import ManagerModule.models.Airplane;
 import ManagerModule.models.TicketForm;
 import utilities.UtilitiesModule;
@@ -10,7 +11,7 @@ public class AirlineManager {
     private final UtilitiesModule utilitiesModule = new UtilitiesModule();
     private final String airlineName = "";
     private Airplane airplane;
-    private ArrayList<TicketForm> airlineTickets;
+    private ArrayList<TicketForm> airlineTickets = new ArrayList<TicketForm>();
     private TicketManager ticketManger;
 
     public AirlineManager() {
@@ -26,7 +27,11 @@ public class AirlineManager {
             String selectedOption = JOptionPane.showInputDialog(null,principalMenu,airlineName,1);
             switch (selectedOption) {
                 case "1":
-                    ticketManger.openTicketManager();
+                    try {
+                        ticketManger.openTicketManager();
+                    } catch (CustomExceptions error) {
+                        utilitiesModule.printInformativeText(error.getMessage());
+                    }
                     break;
                 case "2":
                     String question = "¿Deseas salir de la aplicación?";
@@ -57,5 +62,9 @@ public class AirlineManager {
     public void cancelTicket(TicketForm form) {
         airlineTickets.remove(form);
         airplane.enableStand(form.getAirplaneStand());
+    }
+
+    public boolean airplaneHasAvailableStands() {
+        return airplane.hasAvailableStands(0, 0, false);
     }
 }
