@@ -59,18 +59,22 @@ public class TicketManager {
         form.setDestineCity(JOptionPane.showInputDialog("Destino"));
         form.setAirplaneStand(AirplaneStandDataGenerator(form.getCustomerName()));
 
+
         return form;
     }
 
     public AirplaneStand AirplaneStandDataGenerator(String username){
         AirplaneStand airplaneStand = new AirplaneStand();
+        int standAvaliable;
         String [] opcionStandCategory = {StandCategory.VIP.name(),StandCategory.Gerencial.name(), StandCategory.Ejecutiva.name()};
         airplaneStand.setStandUserName(username);
         String optionCategory = (String) JOptionPane.showInputDialog(null,"Seleccione Categoria","Categoria",JOptionPane.DEFAULT_OPTION,null,opcionStandCategory,opcionStandCategory[0]);
         String availablesStands = airlineManager.getAirplane().getAvailablesStands(0, 0, "", 1);
-        int stand = Integer.parseInt(JOptionPane.showInputDialog(availablesStands + "\nIngrese puesto: ")) - 1;
+        int stand;
+        do {
+            stand = Integer.parseInt(JOptionPane.showInputDialog(availablesStands + "\nIngrese puesto: ")) - 1;
+        }while(!(airlineManager.validateStand(stand)));
         airplaneStand.setStandNumber(stand);
-        System.out.println(airlineManager.validateStand(stand));
         switch (optionCategory) {
             case "VIP":
                 airplaneStand.setCategory(StandCategory.VIP);
@@ -84,9 +88,7 @@ public class TicketManager {
                 airplaneStand.setCategory(StandCategory.Ejecutiva);
                 break;
         }
-
         return  airplaneStand;
-
     }
 
     private void showTicketList(ArrayList<TicketForm> airlineTickets) {
