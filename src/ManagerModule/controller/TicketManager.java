@@ -54,7 +54,6 @@ public class TicketManager {
 
     public TicketForm openFormTicketGenerator() {
         TicketForm form = new TicketForm();
-
         form.setCustomerName(JOptionPane.showInputDialog("Customer Name"));
         form.setIdentificationNumber(JOptionPane.showInputDialog("Indentification Number"));
         form.setDestineCity(JOptionPane.showInputDialog("Destino"));
@@ -64,12 +63,13 @@ public class TicketManager {
     }
 
     public AirplaneStand AirplaneStandDataGenerator(String username){
-        AirplaneStand [][] dataresource = airlineManager.getAirplane().getAirplaneStands();
-        
         AirplaneStand airplaneStand = new AirplaneStand();
         String [] opcionStandCategory = {StandCategory.VIP.name(),StandCategory.Gerencial.name(), StandCategory.Ejecutiva.name()};
         airplaneStand.setStandUserName(username);
         String optionCategory = (String) JOptionPane.showInputDialog(null,"Seleccione Categoria","Categoria",JOptionPane.DEFAULT_OPTION,null,opcionStandCategory,opcionStandCategory[0]);
+        int stand = Integer.parseInt(JOptionPane.showInputDialog("Ingrese puesto: ")) - 1;
+        airplaneStand.setStandNumber(stand);
+        System.out.println(airlineManager.validateStand(stand));
         switch (optionCategory) {
             case "VIP":
                 airplaneStand.setCategory(StandCategory.VIP);
@@ -124,8 +124,8 @@ public class TicketManager {
                 default:
                     try {
                         int index = Integer.parseInt(selectedOption);
-                        Boolean isValidIndex = index > 0 && index <= 8;
-                        //Validate if is available
+                        Boolean isValidIndex = index > 0 && index <= airlineManager.getAirlineTickets().size();
+
                         airlineManager.cancelTicket(index - 1);
                     } catch (NumberFormatException exception) {
                         utilitiesModule.printInformativeText("Por favor ingrese un indice correcto");
@@ -140,7 +140,7 @@ public class TicketManager {
             return ticketList;
         } else {
             String ticketDescription = airlineTickets.get(index).toString();
-            ticketList += isEditable ? index + 1 + ticketDescription : ticketDescription;
+            ticketList += isEditable ? index + 1 + "-  " + ticketDescription : ticketDescription;
             return getTicketListToString(index + 1, airlineTickets, isEditable, ticketList);
         }
     }
