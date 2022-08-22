@@ -57,6 +57,7 @@ public class TicketManager {
         boolean isback = false;
         TicketForm form;
         do {
+            
             form = new TicketForm();
             form.setCustomerName(JOptionPane.showInputDialog("Customer Name"));
             form.setIdentificationNumber(JOptionPane.showInputDialog("Indentification Number"));
