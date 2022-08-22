@@ -63,17 +63,19 @@ public class AirlineManager {
 
 
         airlineTickets.add(form);
-        airplane.ocupeStand(form.getAirplaneStand());
+        int stand = form.getAirplaneStand().getStandNumber();
+        airplane.ocupeStand(0, 0, 0, form.getAirplaneStand(), stand);
     }
 
     public boolean validateStand ( int stand){
-
-        return  airplane.validateStand(stand,0,0,false,1);
+        return  airplane.validateStand(stand,0,0,false,0);
     }
 
-    public void cancelTicket(TicketForm form) {
-        airlineTickets.remove(form);
-        airplane.enableStand(form.getAirplaneStand());
+    public void cancelTicket(int index) {
+        int stand = airlineTickets.get(index).getAirplaneStand().getStandNumber();
+        TicketForm selectedTicket = airlineTickets.get(index);
+        airlineTickets.remove(selectedTicket);
+        airplane.enableStand(0, 0, 0, stand);
     }
 
     public boolean airplaneHasAvailableStands() {

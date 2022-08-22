@@ -8,6 +8,12 @@ public class TicketForm {
 
     public TicketForm() { }
 
+    @Override
+    public String toString(){
+        String standNumber = airplaneStand.getStandNumber() + "";
+        return standNumber + "    " + customerName + "\n\n";
+    }
+
     public String getCustomerName() {
         return customerName;
     }
