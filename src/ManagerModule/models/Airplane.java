@@ -9,6 +9,11 @@ public class Airplane {
         int standsTotalRows = 4;
         int standsTotalCol = 2;
         stands = new AirplaneStand[standsTotalRows][standsTotalCol];
+
+    }
+
+    public void setStands(AirplaneStand[][] stands) {
+        this.stands = stands;
     }
 
     public String getIdentifier() {
@@ -38,5 +43,21 @@ public class Airplane {
             }
             return  hasAvailableStands(file, col + 1, isAvailable);
         }
+    }
+
+    public boolean validateStand(int stand,int file, int col, boolean isAvailable,int cont){
+
+        if (file >= stands.length) {
+            return isAvailable;
+        }else if (col >= stands[0].length){
+            return validateStand(stand,file+1, col,isAvailable,cont);
+        }else{
+            if(stand == cont && stands[file][col] == null ){
+                isAvailable = true;
+            }
+            return  validateStand(stand,file, col + 1, isAvailable,cont+1);
+        }
+
+
     }
 }

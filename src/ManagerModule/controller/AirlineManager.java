@@ -1,6 +1,8 @@
 package ManagerModule.controller;
 import ManagerModule.Exceptions.CustomExceptions;
 import ManagerModule.models.Airplane;
+import ManagerModule.models.AirplaneStand;
+import ManagerModule.models.StandCategory;
 import ManagerModule.models.TicketForm;
 import utilities.UtilitiesModule;
 
@@ -57,6 +59,11 @@ public class AirlineManager {
     public void addTicket(TicketForm form) {
         airlineTickets.add(form);
         airplane.ocupeStand(form.getAirplaneStand());
+    }
+
+    public boolean validateStand ( int stand){
+
+        return  airplane.validateStand(stand,0,0,false,1);
     }
 
     public void cancelTicket(TicketForm form) {

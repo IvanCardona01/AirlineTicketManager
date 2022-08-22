@@ -53,9 +53,11 @@ public class TicketManager {
     }
 
     public TicketForm openFormTicketGenerator() {
-        TicketForm form = new TicketForm();
+        System.out.println(airlineManager.validateStand(1));
         boolean isback = false;
+        TicketForm form;
         do {
+            form = new TicketForm();
             form.setCustomerName(JOptionPane.showInputDialog("Customer Name"));
             form.setIdentificationNumber(JOptionPane.showInputDialog("Indentification Number"));
             form.setDestineCity(JOptionPane.showInputDialog("Destino"));
@@ -66,8 +68,6 @@ public class TicketManager {
     }
 
     public AirplaneStand AirplaneStandDataGenerator(String username){
-        AirplaneStand [][] dataresource = airlineManager.getAirplane().getAirplaneStands();
-        
         AirplaneStand airplaneStand = new AirplaneStand();
         String [] opcionStandCategory = {StandCategory.VIP.name(),StandCategory.Gerencial.name(), StandCategory.Ejecutiva.name()};
         airplaneStand.setStandUserName(username);
