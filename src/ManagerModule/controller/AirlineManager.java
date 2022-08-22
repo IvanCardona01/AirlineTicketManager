@@ -57,6 +57,11 @@ public class AirlineManager {
     }
 
     public void addTicket(TicketForm form) {
+
+
+
+
+
         airlineTickets.add(form);
         airplane.ocupeStand(form.getAirplaneStand());
     }

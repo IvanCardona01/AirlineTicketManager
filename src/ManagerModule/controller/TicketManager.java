@@ -55,21 +55,18 @@ public class TicketManager {
     public TicketForm openFormTicketGenerator() {
         System.out.println(airlineManager.validateStand(1));
         boolean isback = false;
-        TicketForm form;
-        do {
+        TicketForm form = new TicketForm();
             System.out.println(airlineManager.validateStand(1));
-            form = new TicketForm();
             form.setCustomerName(JOptionPane.showInputDialog("Customer Name"));
             form.setIdentificationNumber(JOptionPane.showInputDialog("Indentification Number"));
             form.setDestineCity(JOptionPane.showInputDialog("Destino"));
             form.setAirplaneStand(AirplaneStandDataGenerator(form.getCustomerName()));
-           isback = utilitiesModule.showConfirmationMessage("Desea registrar otro ticket","Salir");
-        } while (isback);
         return form;
     }
 
     public AirplaneStand AirplaneStandDataGenerator(String username){
         AirplaneStand airplaneStand = new AirplaneStand();
+        int standAvaliable;
         String [] opcionStandCategory = {StandCategory.VIP.name(),StandCategory.Gerencial.name(), StandCategory.Ejecutiva.name()};
         airplaneStand.setStandUserName(username);
         String optionCategory = (String) JOptionPane.showInputDialog(null,"Seleccione Categoria","Categoria",JOptionPane.DEFAULT_OPTION,null,opcionStandCategory,opcionStandCategory[0]);
@@ -86,6 +83,11 @@ public class TicketManager {
                 airplaneStand.setCategory(StandCategory.Ejecutiva);
                 break;
         }
+
+        do {
+            standAvaliable = Integer.parseInt(JOptionPane.showInputDialog("ingrese el numero de puesto"));
+        }while(!(airlineManager.validateStand(standAvaliable)));
+
 
         return  airplaneStand;
 
