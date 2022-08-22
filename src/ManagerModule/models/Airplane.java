@@ -19,8 +19,15 @@ public class Airplane {
 
     }
 
-    public void enableStand(AirplaneStand stand) {
-
+    public void enableStand(int index, int file, int col, int stand) {
+        if ( file >= stands.length ) {
+            
+        } else if (col >= stands[0].length ){
+            enableStand(index, file + 1, 0, stand);
+        } else if (index == stand) {
+            stands[file][col] = null;
+        }
+        enableStand(index + 1, file, col + 1, stand);
     }
 
     public AirplaneStand[][] getAirplaneStands() {

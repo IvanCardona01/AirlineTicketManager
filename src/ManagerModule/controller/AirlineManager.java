@@ -59,9 +59,10 @@ public class AirlineManager {
         airplane.ocupeStand(form.getAirplaneStand());
     }
 
-    public void cancelTicket(TicketForm form) {
-        airlineTickets.remove(form);
-        airplane.enableStand(form.getAirplaneStand());
+    public void cancelTicket(int stand) {
+        TicketForm selectedTicket = airlineTickets.get(stand);
+        airlineTickets.remove(selectedTicket);
+        airplane.enableStand(0, 0, 0, stand);
     }
 
     public boolean airplaneHasAvailableStands() {

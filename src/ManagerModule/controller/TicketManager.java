@@ -54,14 +54,12 @@ public class TicketManager {
 
     public TicketForm openFormTicketGenerator() {
         TicketForm form = new TicketForm();
-        boolean isback = false;
-        do {
-            form.setCustomerName(JOptionPane.showInputDialog("Customer Name"));
-            form.setIdentificationNumber(JOptionPane.showInputDialog("Indentification Number"));
-            form.setDestineCity(JOptionPane.showInputDialog("Destino"));
-            form.setAirplaneStand(AirplaneStandDataGenerator(form.getCustomerName()));
-           isback = utilitiesModule.showConfirmationMessage("Desea registrar otro ticket","Salir");
-        } while (isback);
+
+        form.setCustomerName(JOptionPane.showInputDialog("Customer Name"));
+        form.setIdentificationNumber(JOptionPane.showInputDialog("Indentification Number"));
+        form.setDestineCity(JOptionPane.showInputDialog("Destino"));
+        form.setAirplaneStand(AirplaneStandDataGenerator(form.getCustomerName()));
+
         return form;
     }
 
@@ -94,9 +92,10 @@ public class TicketManager {
         Boolean back = false;
         do {
             Boolean isEditable = false;
-            String ticketsList = "\n*****************************************\n\n"
-                               + getTicketListToString(airlineManager.getAirlineTickets(), isEditable)
-                               + "\n0. Atrás                   \n\n";
+            String ticketsList = "\n*****************************************\n"
+                                + "Puesto: \n"
+                                + getTicketListToString(0,airlineManager.getAirlineTickets(), isEditable, "")
+                                + "\n0. Atrás                   \n\n";
             String selectedOption = JOptionPane.showInputDialog(null,ticketsList,"",1);
             switch (selectedOption) {
                 case "0":
@@ -113,7 +112,7 @@ public class TicketManager {
         do {
             Boolean isEditable = true;
             String editableTicketsList = "\n*****************************************\n\n"
-                                        + getTicketListToString(airlineManager.getAirlineTickets(), isEditable)
+                                        + getTicketListToString(0,airlineManager.getAirlineTickets(), isEditable, "")
                                         + "\nIngrese el indice del ticket\n"
                                         + "que desea eliminar o ingrese\n"
                                         + "0 para ir atrás\n\n";
@@ -123,15 +122,26 @@ public class TicketManager {
                     back = true;
                     break;
                 default:
-                    //Validate eleccion about stand removable
+                    try {
+                        int index = Integer.parseInt(selectedOption);
+                        Boolean isValidIndex = index > 0 && index <= 8;
+                        //Validate if is available
+                        airlineManager.cancelTicket(index - 1);
+                    } catch (NumberFormatException exception) {
+                        utilitiesModule.printInformativeText("Por favor ingrese un indice correcto");
+                    }
                     break;
             }
         } while (!back);
     }
 
-    private String getTicketListToString(ArrayList<TicketForm> airlineTickets, Boolean isEditable) {
-        String ticketList = "";
-
-        return  ticketList;
+    private String getTicketListToString(int index, ArrayList<TicketForm> airlineTickets, Boolean isEditable, String ticketList) {
+        if (index >= airlineTickets.size()){
+            return ticketList;
+        } else {
+            String ticketDescription = airlineTickets.get(index).toString();
+            ticketList += isEditable ? index + 1 + ticketDescription : ticketDescription;
+            return getTicketListToString(index + 1, airlineTickets, isEditable, ticketList);
+        }
     }
 }
