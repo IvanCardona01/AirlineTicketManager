@@ -57,7 +57,7 @@ public class TicketManager {
         boolean isback = false;
         TicketForm form;
         do {
-            
+            System.out.println(airlineManager.validateStand(1));
             form = new TicketForm();
             form.setCustomerName(JOptionPane.showInputDialog("Customer Name"));
             form.setIdentificationNumber(JOptionPane.showInputDialog("Indentification Number"));
