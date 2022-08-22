@@ -67,7 +67,8 @@ public class TicketManager {
         String [] opcionStandCategory = {StandCategory.VIP.name(),StandCategory.Gerencial.name(), StandCategory.Ejecutiva.name()};
         airplaneStand.setStandUserName(username);
         String optionCategory = (String) JOptionPane.showInputDialog(null,"Seleccione Categoria","Categoria",JOptionPane.DEFAULT_OPTION,null,opcionStandCategory,opcionStandCategory[0]);
-        int stand = Integer.parseInt(JOptionPane.showInputDialog("Ingrese puesto: ")) - 1;
+        String availablesStands = airlineManager.getAirplane().getAvailablesStands(0, 0, "", 1);
+        int stand = Integer.parseInt(JOptionPane.showInputDialog(availablesStands + "\nIngrese puesto: ")) - 1;
         airplaneStand.setStandNumber(stand);
         System.out.println(airlineManager.validateStand(stand));
         switch (optionCategory) {
@@ -125,8 +126,11 @@ public class TicketManager {
                     try {
                         int index = Integer.parseInt(selectedOption);
                         Boolean isValidIndex = index > 0 && index <= airlineManager.getAirlineTickets().size();
-
-                        airlineManager.cancelTicket(index - 1);
+                        if (isValidIndex) {
+                            airlineManager.cancelTicket(index - 1);
+                        } else {
+                            utilitiesModule.printInformativeText("Por favor ingrese un indice disponible");
+                        }
                     } catch (NumberFormatException exception) {
                         utilitiesModule.printInformativeText("Por favor ingrese un indice correcto");
                     }

@@ -73,7 +73,20 @@ public class Airplane {
             }
             return  validateStand(stand,file, col + 1, isAvailable,cont+1);
         }
+    }
 
-
+    public String getAvailablesStands(int file, int col, String availablesStands, int stand) {
+        if (file >= stands.length) {
+            return availablesStands;
+        } else if (col >= stands[0].length) {
+            return getAvailablesStands(file + 1, 0, availablesStands, stand);
+        } else {
+            if (stands[file][col] == null) {
+                availablesStands += stand + "-  Disponible\n";
+            } else {
+                availablesStands += stand + "-  Ocupado\n";
+            }
+            return  getAvailablesStands(file, col + 1, availablesStands, stand + 1);
+        }
     }
 }
