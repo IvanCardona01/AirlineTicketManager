@@ -23,10 +23,14 @@ public class Airplane {
 
     }
 
+    public AirplaneStand[][] getAirplaneStands() {
+        return stands;
+    }
+
     public boolean hasAvailableStands(int file, int col, Boolean isAvailable) {
-        if (file >= stands[0].length ) {
+        if (file >= stands.length ) {
             return  isAvailable;
-        } else if (col >= stands.length) {
+        } else if (col >= stands[0].length) {
             return  hasAvailableStands(file + 1, 0, isAvailable);
         } else {
             if (stands[file][col] == null) {

@@ -1,5 +1,7 @@
 package ManagerModule.controller;
 
+import ManagerModule.models.AirplaneStand;
+import ManagerModule.models.StandCategory;
 import ManagerModule.Exceptions.CustomExceptions;
 import ManagerModule.models.TicketForm;
 import utilities.UtilitiesModule;
@@ -52,18 +54,40 @@ public class TicketManager {
 
     public TicketForm openFormTicketGenerator() {
         TicketForm form = new TicketForm();
-        Boolean back = false;
+        boolean isback = false;
         do {
-            String name = receiveAnswer("Nombre del pasajero: ");
-            String customerId = receiveAnswer(" del pasajero: ");
-
-        } while (!back);
+            form.setCustomerName(JOptionPane.showInputDialog("Customer Name"));
+            form.setIdentificationNumber(JOptionPane.showInputDialog("Indentification Number"));
+            form.setDestineCity(JOptionPane.showInputDialog("Destino"));
+            form.setAirplaneStand(AirplaneStandDataGenerator(form.getCustomerName()));
+           isback = utilitiesModule.showConfirmationMessage("Desea registrar otro ticket","Salir");
+        } while (isback);
         return form;
     }
 
-    public String receiveAnswer(String question) {
-        String answerd = JOptionPane.showInputDialog(question);
-        return answerd;
+    public AirplaneStand AirplaneStandDataGenerator(String username){
+        AirplaneStand [][] dataresource = airlineManager.getAirplane().getAirplaneStands();
+        
+        AirplaneStand airplaneStand = new AirplaneStand();
+        String [] opcionStandCategory = {StandCategory.VIP.name(),StandCategory.Gerencial.name(), StandCategory.Ejecutiva.name()};
+        airplaneStand.setStandUserName(username);
+        String optionCategory = (String) JOptionPane.showInputDialog(null,"Seleccione Categoria","Categoria",JOptionPane.DEFAULT_OPTION,null,opcionStandCategory,opcionStandCategory[0]);
+        switch (optionCategory) {
+            case "VIP":
+                airplaneStand.setCategory(StandCategory.VIP);
+                break;
+
+            case "Gerencial":
+                airplaneStand.setCategory(StandCategory.Gerencial);
+                break;
+
+            case "Ejecutiva":
+                airplaneStand.setCategory(StandCategory.Ejecutiva);
+                break;
+        }
+
+        return  airplaneStand;
+
     }
 
     private void showTicketList(ArrayList<TicketForm> airlineTickets) {
